@@ -7,7 +7,7 @@ import (
     "github.com/jinzhu/gorm"
     _ "github.com/jinzhu/gorm/dialects/mysql"
 
-    "github.com:zyd0482/meeting_server/pkg/setting"
+    "github.com/zyd0482/meeting_server/pkg/setting"
 )
 
 var db *gorm.DB

@@ -6,7 +6,7 @@ import (
 
     "github.com/gin-gonic/gin"
 
-    "github.com:zyd0482/meeting_server/pkg/setting"
+    "github.com/zyd0482/meeting_server/pkg/setting"
 )
 
 func main() {
