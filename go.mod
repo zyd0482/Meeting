@@ -1,4 +1,4 @@
-module github.com:zyd0482/meeting/server
+module github.com:zyd0482/meeting_server/
 
 go 1.13
 
@@ -19,13 +19,13 @@ require (
 )
 
 replace (
-	github.com:zyd0482/meeting/server/conf => ./conf
-	github.com:zyd0482/meeting/server/e => ./e
-	github.com:zyd0482/meeting/server/middleware => ./middleware
-	github.com:zyd0482/meeting/server/models => ./models
-	github.com:zyd0482/meeting/server/pkg => ./pkg
-	github.com:zyd0482/meeting/server/routers => ./routers
-	github.com:zyd0482/meeting/server/runtime => ./runtime
-	github.com:zyd0482/meeting/server/setting => ./setting
-	github.com:zyd0482/meeting/server/util => ./util
+	github.com:zyd0482/meeting_server/conf => ./conf
+	github.com:zyd0482/meeting_server/e => ./e
+	github.com:zyd0482/meeting_server/middleware => ./middleware
+	github.com:zyd0482/meeting_server/models => ./models
+	github.com:zyd0482/meeting_server/pkg => ./pkg
+	github.com:zyd0482/meeting_server/routers => ./routers
+	github.com:zyd0482/meeting_server/runtime => ./runtime
+	github.com:zyd0482/meeting_server/setting => ./setting
+	github.com:zyd0482/meeting_server/util => ./util
 )
