@@ -1,4 +1,4 @@
-module github.com/zyd0482/meeting_server
+module meeting
 
 go 1.13
 
@@ -18,16 +18,4 @@ require (
 	golang.org/x/sys v0.0.0-20200202164722-d101bd2416d5 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
-)
-
-replace (
-	github.com/zyd0482/meeting_server/conf => /conf
-	github.com/zyd0482/meeting_server/middleware => /middleware
-	github.com/zyd0482/meeting_server/models => /models
-	github.com/zyd0482/meeting_server/pkg => /pkg
-	github.com/zyd0482/meeting_server/pkg/e => /pkg/e
-	github.com/zyd0482/meeting_server/pkg/setting => /pkg/setting
-	github.com/zyd0482/meeting_server/pkg/util => /pkg/util
-	github.com/zyd0482/meeting_server/routers => /routers
-	github.com/zyd0482/meeting_server/runtime => /runtime
 )
