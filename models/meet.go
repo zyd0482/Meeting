@@ -21,9 +21,9 @@ type Meet struct {
     State       int
 }
 
-func GetMeetTotal(maps interface{}) (int, error) {
+func GetMeetTotal() (int, error) {
     var count int
-    if err := db.Model(&Meet{}).Where(maps).Count(&count).Error; err != nil {
+    if err := db.Model(&Meet{}).Count(&count).Error; err != nil {
         return 0, err
     }
 
