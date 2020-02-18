@@ -1,24 +1,37 @@
 package models
 
 import (
+    "time"
     "github.com/jinzhu/gorm"
 )
 
 type Meet struct {
     gorm.Model
+    // UserID    int       `json:"uid" gorm:"column:uid"`
+    Type      int       `json:"type"`
+    Banner    string    `json:"banner"`
+    Name      string    `json:"name"`
+    // StartAt   time.Time `json:"start_at"`
+    // Place     string    `json:"place"`
+    // Longitude string    `json:"longitude"`
+    // Latitude  string    `json:"latitude"`
+    // Fee       int       `json:"fee"`
+    // Person    int       `json:"person"`
+    // Content   string    `json:"content" gorm:"size:1000"`
+    // State     int       `json:"state"`
+}
 
-    UserID      int `gorm:"column:uid"`
-    Type        int
-    Banner      string
-    Name        string
-    StartAt     time.Time
-    Place       string
-    Longitude   string
-    Latitude    string
-    Fee         int
-    Person      int
-    Content     string `gorm:"size:1000"`
-    State       int
+func ExistMeetByID(id int) (bool, error) {
+    var meet Meet
+    err := db.Find(&meet, id).Error
+    if err != nil && err != gorm.ErrRecordNotFound {
+        return false, err
+    }
+
+    if meet.ID > 0 {
+        return true, nil
+    }
+    return false, nil
 }
 
 func GetMeetTotal() (int, error) {
@@ -30,17 +43,17 @@ func GetMeetTotal() (int, error) {
     return count, nil
 }
 
-func GetMeets(pageNum int, pageSize int, maps interface{}) ([]*Article, error) {
+func GetMeets(pageNum int, pageSize int, maps interface{}) ([]*Meet, error) {
     var meets []*Meet
     err := db.Where(maps).Offset(pageNum).Limit(pageSize).Find(&meets).Error
     if err != nil && err != gorm.ErrRecordNotFound {
         return nil, err
     }
 
-    return articles, nil
+    return meets, nil
 }
 
-func GetMeet(id int) (*Article, error) {
+func GetMeet(id int) (*Meet, error) {
     var meet Meet
     err := db.First(&meet, id).Error
     if err != nil && err != gorm.ErrRecordNotFound {
@@ -50,7 +63,7 @@ func GetMeet(id int) (*Article, error) {
     return &meet, nil
 }
 
-func UpdateMeet(id int, data map[string]interface{}) error {
+func EditMeet(id int, data map[string]interface{}) error {
     if err := db.Model(&Meet{}).Where("id = ?", id).Updates(data).Error; err != nil {
         return err
     }
@@ -59,7 +72,7 @@ func UpdateMeet(id int, data map[string]interface{}) error {
 }
 
 func AddMeet(data map[string]interface{}) error {
-    article := Article{
+    meet := Meet{
         Type:       data["type"].(int),
         Banner:     data["banner"].(string),
         Name:       data["name"].(string),
@@ -69,10 +82,10 @@ func AddMeet(data map[string]interface{}) error {
         Latitude:   data["latitude"].(string),
         Fee:        data["fee"].(int),
         Person:     data["person"].(int),
-        content:    data["content"].(string),
+        Content:    data["content"].(string),
         State:      data["state"].(int),
     }
-    if err := db.Create(&article).Error; err != nil {
+    if err := db.Create(&meet).Error; err != nil {
         return err
     }
 
@@ -80,7 +93,7 @@ func AddMeet(data map[string]interface{}) error {
 }
 
 func DeleteMeet(id int) error {
-    if err := db.Delete(&Meet{ID: id}).Error; err != nil {
+    if err := db.Where("id = ?", id).Delete(&Meet{}).Error; err != nil {
         return err
     }
 

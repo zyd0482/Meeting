@@ -1,0 +1,25 @@
+{
+  "database": {
+    "default": {
+      "max_idle_con": 50,
+      "max_open_con": 150,
+      "file": "./admin/admin.db",
+      "driver": "sqlite"
+    }
+  },
+  "prefix": "admin",
+  "store": {
+    "path": "./admin/uploads",
+    "prefix": "uploads"
+  },
+  "language": "cn",
+  "error_log": "./admin/log/error-log",
+  "error_log_off": false,
+  "access_log": "./admin/log/access-log",
+  "access_log_off": false,
+  "sql_log": true,
+  "info_log": "./admin/log/info-log",
+  "debug": true,
+  "color_scheme": "skin-black",
+  "login_title": "Meeting"
+}

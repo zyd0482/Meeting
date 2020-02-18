@@ -27,7 +27,6 @@ type App struct {
     LogFileExt  string
     TimeFormat  string
 }
-
 var AppSetting = &App{}
 
 type Server struct {
@@ -36,33 +35,18 @@ type Server struct {
     ReadTimeout  time.Duration
     WriteTimeout time.Duration
 }
-
 var ServerSetting = &Server{}
 
 type Database struct {
     Type        string
-    User        string
-    Password    string
-    Host        string
-    Name        string
+    Path        string
     TablePrefix string
 }
-
 var DatabaseSetting = &Database{}
 
-type Redis struct {
-    Host        string
-    Password    string
-    MaxIdle     int
-    MaxActive   int
-    IdleTimeout time.Duration
-}
-
-var RedisSetting = &Redis{}
 
 var cfg *ini.File
 
-// Setup initialize the configuration instance
 func Setup() {
     var err error
     cfg, err = ini.Load("conf/app.ini")
@@ -73,7 +57,6 @@ func Setup() {
     mapTo("app", AppSetting)
     mapTo("server", ServerSetting)
     mapTo("database", DatabaseSetting)
-    mapTo("redis", RedisSetting)
 
     AppSetting.ImageMaxSize = AppSetting.ImageMaxSize * 1024 * 1024
     ServerSetting.ReadTimeout = ServerSetting.ReadTimeout * time.Second
@@ -81,7 +64,6 @@ func Setup() {
     RedisSetting.IdleTimeout = RedisSetting.IdleTimeout * time.Second
 }
 
-// mapTo map section
 func mapTo(section string, v interface{}) {
     err := cfg.Section(section).MapTo(v)
     if err != nil {
