@@ -7,18 +7,15 @@ import (
 
 type Meet struct {
     gorm.Model
-    // UserID    int       `json:"uid" gorm:"column:uid"`
     Type      int       `json:"type"`
     Banner    string    `json:"banner"`
     Name      string    `json:"name"`
-    // StartAt   time.Time `json:"start_at"`
-    // Place     string    `json:"place"`
-    // Longitude string    `json:"longitude"`
-    // Latitude  string    `json:"latitude"`
-    // Fee       int       `json:"fee"`
-    // Person    int       `json:"person"`
-    // Content   string    `json:"content" gorm:"size:1000"`
-    // State     int       `json:"state"`
+    StartAt   time.Time `json:"start_at"`
+    Place     string    `json:"place"`
+    Fee       int       `json:"fee"`
+    Person    int       `json:"person"`
+    Content   string    `json:"content" gorm:"size:1000"`
+    State     int       `json:"state"`
 }
 
 func ExistMeetByID(id int) (bool, error) {
@@ -78,8 +75,6 @@ func AddMeet(data map[string]interface{}) error {
         Name:       data["name"].(string),
         StartAt:    data["start_at"].(time.Time),
         Place:      data["place"].(string),
-        Longitude:  data["longitude"].(string),
-        Latitude:   data["latitude"].(string),
         Fee:        data["fee"].(int),
         Person:     data["person"].(int),
         Content:    data["content"].(string),

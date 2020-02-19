@@ -3,27 +3,32 @@ package models
 import (
     "fmt"
     "log"
-
+    "time"
+    
     "github.com/jinzhu/gorm"
-    _ "github.com/jinzhu/gorm/dialects/sqlite"
+    _ "github.com/jinzhu/gorm/dialects/mysql"
 
     "meeting/pkg/setting"
-    "time"
 )
 
 var db *gorm.DB
 
 type Model struct {
   ID        int   `json:"id" gorm:"primary_key"`
-  CreatedAt int64 `json:"created_at"`
-  UpdatedAt int64 `json:"updated_at"`
-  DeletedAt int64 `json:"deleted_at"`
+  CreatedAt time.Time `json:"created_at"`
+  UpdatedAt time.Time `json:"updated_at"`
+  DeletedAt time.Time `json:"deleted_at"`
 }
 
 // Setup initializes the database instance
 func Setup() {
     var err error
-    db, err = gorm.Open(setting.DatabaseSetting.Type, setting.DatabaseSetting.File)
+    db, err = gorm.Open(setting.DatabaseSetting.Type, fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local",
+        setting.DatabaseSetting.User,
+        setting.DatabaseSetting.Password,
+        setting.DatabaseSetting.Host,
+        setting.DatabaseSetting.Port,
+        setting.DatabaseSetting.Name))
     if err != nil {
         log.Fatalf("models.Setup err: %v", err)
     }

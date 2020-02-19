@@ -3,13 +3,13 @@
     "default": {
       "max_idle_con": 50,
       "max_open_con": 150,
-      "file": "./admin/admin.db",
+      "file": "meeting.db",
       "driver": "sqlite"
     }
   },
   "prefix": "admin",
   "store": {
-    "path": "./admin/uploads",
+    "path": "uploads/",
     "prefix": "uploads"
   },
   "language": "cn",

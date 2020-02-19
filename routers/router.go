@@ -14,10 +14,10 @@ import (
     "meeting/pkg/qrcode"
     "meeting/pkg/upload"
     "meeting/routers/api"
-    "meeting/routers/api/v1"
+    // "meeting/routers/api/v1"
 )
 
-func (r *gin.Engine) InitRouter() {
+func InitRouter(r *gin.Engine) {
     r.Use(gin.Logger())
     r.Use(gin.Recovery())
 

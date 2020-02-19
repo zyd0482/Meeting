@@ -39,7 +39,11 @@ var ServerSetting = &Server{}
 
 type Database struct {
     Type        string
-    Path        string
+    User        string
+    Password    string
+    Host        string
+    Port        string
+    Name        string
     TablePrefix string
 }
 var DatabaseSetting = &Database{}
@@ -61,7 +65,6 @@ func Setup() {
     AppSetting.ImageMaxSize = AppSetting.ImageMaxSize * 1024 * 1024
     ServerSetting.ReadTimeout = ServerSetting.ReadTimeout * time.Second
     ServerSetting.WriteTimeout = ServerSetting.WriteTimeout * time.Second
-    RedisSetting.IdleTimeout = RedisSetting.IdleTimeout * time.Second
 }
 
 func mapTo(section string, v interface{}) {

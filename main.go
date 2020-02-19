@@ -25,8 +25,8 @@ func init() {
 func main() {
     gin.SetMode(setting.ServerSetting.RunMode)
     handler := gin.New()
-    handler.InitRouter()
-    handler.InitAdmin()
+    routers.InitRouter(handler)
+    admin.InitAdmin(handler)
 
     readTimeout := setting.ServerSetting.ReadTimeout
     writeTimeout := setting.ServerSetting.WriteTimeout
