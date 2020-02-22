@@ -25,7 +25,7 @@ type auth struct {
 // @Failure 500 {object} app.Response
 // @Router /auth [get]
 func GetAuth(c *gin.Context) {
-    appG := app.Gin{C: c}
+    response := app.Response{C: c}
     valid := validation.Validation{}
 
     username := c.Query("username")
@@ -36,29 +36,29 @@ func GetAuth(c *gin.Context) {
 
     if !ok {
         app.MarkErrors(valid.Errors)
-        appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, nil)
+        response.Send(http.StatusBadRequest, e.INVALID_PARAMS, nil)
         return
     }
 
     authService := auth_service.Auth{Username: username, Password: password}
     isExist, err := authService.Check()
     if err != nil {
-        appG.Response(http.StatusInternalServerError, e.ERROR_AUTH_CHECK_TOKEN_FAIL, nil)
+        response.Send(http.StatusInternalServerError, e.ERROR_AUTH_CHECK_TOKEN_FAIL, nil)
         return
     }
 
     if !isExist {
-        appG.Response(http.StatusUnauthorized, e.ERROR_AUTH, nil)
+        response.Send(http.StatusUnauthorized, e.ERROR_AUTH, nil)
         return
     }
 
     token, err := util.GenerateToken(username, password)
     if err != nil {
-        appG.Response(http.StatusInternalServerError, e.ERROR_AUTH_TOKEN, nil)
+        response.Send(http.StatusInternalServerError, e.ERROR_AUTH_TOKEN, nil)
         return
     }
 
-    appG.Response(http.StatusOK, e.SUCCESS, map[string]string{
+    response.Send(http.StatusOK, e.SUCCESS, map[string]string{
         "token": token,
     })
 }

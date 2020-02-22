@@ -1,37 +1,53 @@
 package routers
 
 import (
-    "net/http"
+    // "net/http"
 
     "github.com/gin-gonic/gin"
 
     _ "meeting/docs"
-    "github.com/swaggo/gin-swagger"
-    "github.com/swaggo/gin-swagger/swaggerFiles"
+    // "github.com/swaggo/gin-swagger"
+    // "github.com/swaggo/gin-swagger/swaggerFiles"
 
-    "meeting/middleware/jwt"
-    "meeting/pkg/export"
-    "meeting/pkg/qrcode"
-    "meeting/pkg/upload"
-    "meeting/routers/api"
+    // "meeting/middleware/jwt"
+    // "meeting/pkg/export"
+    // "meeting/pkg/qrcode"
+    // "meeting/pkg/upload"
+    // "meeting/routers/api"
     // "meeting/routers/api/v1"
+    "meeting/routers/api/admin_v1"
 )
 
 func InitRouter(r *gin.Engine) {
     r.Use(gin.Logger())
     r.Use(gin.Recovery())
 
-    r.StaticFS("/export", http.Dir(export.GetExcelFullPath()))
-    r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
-    r.StaticFS("/qrcode", http.Dir(qrcode.GetQrCodeFullPath()))
+    // r.StaticFS("/export", http.Dir(export.GetExcelFullPath()))
+    // r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
+    // r.StaticFS("/qrcode", http.Dir(qrcode.GetQrCodeFullPath()))
 
-    r.GET("/auth", api.GetAuth)
-    r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-    r.POST("/upload", api.UploadImage)
+    // r.GET("/auth", api.GetAuth)
+    // r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+    // r.POST("/upload", api.UploadImage)
 
-    apiv1 := r.Group("/api/v1")
-    apiv1.Use(jwt.JWT())
+
+    adminv1 := r.Group("/api/admin/v1")
+    // adminv1.Use(jwt.JWT())
     {
+        // 获取活动列表
+        adminv1.GET("/meets", admin_v1.Meet_List)
+        // 添加活动
+        adminv1.POST("/meets", admin_v1.Meet_Add)
+        // 获取活动详情
+        adminv1.GET("/meets/:id", admin_v1.Meet_Detail)
+        // 更新活动
+        adminv1.PUT("/meets/:id", admin_v1.Meet_Update)
+        // 删除活动
+        adminv1.DELETE("/meets/:id", admin_v1.Meet_Delete)
+    }
+    // apiv1 := r.Group("/api/v1")
+    // apiv1.Use(jwt.JWT())
+    // {
         // //获取标签列表
         // apiv1.GET("/tags", v1.GetTags)
         // //新建标签
@@ -57,5 +73,5 @@ func InitRouter(r *gin.Engine) {
         // apiv1.DELETE("/articles/:id", v1.DeleteArticle)
         //生成文章海报
         // apiv1.POST("/articles/poster/generate", v1.GenerateArticlePoster)
-    }
+    // }
 }
