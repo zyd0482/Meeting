@@ -20,3 +20,18 @@ INSERT INTO `meeting_meets` (`id`, `type`, `banner`, `title`, `start_at`, `place
 VALUES 
     (NULL,1,NULL,'测试活动','2019-09-10 00:00:00','杭州',50,100,'这是一个测试活动','1',NULL,NULL,NULL);
 UNLOCK TABLES;
+
+
+
+CREATE TABLE meeting_admin_auths (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(80) COMMENT '账号',
+  `password` varchar(80) COMMENT '密码',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='后台管理用户';
+
+LOCK TABLES `meeting_admin_auths` WRITE;
+INSERT INTO `meeting_admin_auths` (`id`, `username`, `password`) 
+VALUES 
+    (1, 'admin', 'admin');
+UNLOCK TABLES;
