@@ -1,8 +1,6 @@
 package admin
 
 import (
-	"net/http"
-
 	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
 
@@ -17,19 +15,21 @@ type adminAuth struct {
 	Password string `valid:"Required; MaxSize(50)"`
 }
 
-// 用户登录
 func User_Login(c *gin.Context) {
+	util.Quickprintln(c)
 	response := app.Response{C: c}
 	valid := validation.Validation{}
 
 	username := c.PostForm("username")
 	password := c.PostForm("password")
+	println("username: " + username)
+	println("password: " + password)
 
 	a := adminAuth{Username: username, Password: password}
 	ok, _ := valid.Valid(&a)
 
 	if !ok {
-		response.SendErr(0, "用户名密码错误")
+		response.SendErr(0, "格式不正确")
 		return
 	}
 
@@ -41,13 +41,13 @@ func User_Login(c *gin.Context) {
 	}
 
 	if !isExist {
-		response.SendErr(0, "用户不存在")
+		response.SendErr(0, "用户名密码错误")
 		return
 	}
 
 	token, err := util.GenerateToken(username, password)
 	if err != nil {
-		response.Send(http.StatusInternalServerError, e.ERROR_AUTH_TOKEN, nil)
+		response.SendErr(e.ERROR_DB, "")
 		return
 	}
 

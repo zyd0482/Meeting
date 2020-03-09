@@ -8,14 +8,14 @@ type AdminAuth struct {
 	Password string `json:"password"`
 }
 
-func CheckAdminAuth(username, password string) (bool, error) {
-	var auth Auth
-	err := db.Select("id").Where(Auth{Username: username, Password: password}).First(&auth).Error
+func Admin_CheckAuth(username, password string) (bool, error) {
+	var adminAuth AdminAuth
+	err := db.Select("id").Where(AdminAuth{Username: username, Password: password}).First(&adminAuth).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return false, err
 	}
 
-	if auth.ID > 0 {
+	if adminAuth.ID > 0 {
 		return true, nil
 	}
 

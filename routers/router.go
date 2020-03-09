@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	// _ "meeting/docs"
+	"meeting/middleware/jwt"
 	"meeting/routers/api/admin"
 	// "github.com/swaggo/gin-swagger"
 	// "github.com/swaggo/gin-swagger/swaggerFiles"
@@ -29,12 +30,11 @@ func InitRouter(r *gin.Engine) {
 	// r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	// r.POST("/upload", api.UploadImage)
 
+	// 用户登录
+	r.POST("/api/admin/user/login", admin.User_Login)
 	adminapi := r.Group("/api/admin")
-	// adminv1.Use(jwt.JWT())
+	adminapi.Use(jwt.JWT())
 	{
-		// 用户登录
-		adminapi.POST("/user/login", admin.User_Login)
-
 		// 获取活动列表
 		adminapi.POST("/meet/list", admin.Meet_List)
 		// 添加活动

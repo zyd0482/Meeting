@@ -8,5 +8,5 @@ type AdminAuth struct {
 }
 
 func (a *AdminAuth) Check() (bool, error) {
-	return models.CheckAdminAuth(a.Username, a.Password)
+	return models.Admin_CheckAuth(a.Username, a.Password)
 }
