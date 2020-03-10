@@ -16,20 +16,17 @@ type adminAuth struct {
 }
 
 func User_Login(c *gin.Context) {
-	util.Quickprintln(c)
 	response := app.Response{C: c}
 	valid := validation.Validation{}
 
 	username := c.PostForm("username")
 	password := c.PostForm("password")
-	println("username: " + username)
-	println("password: " + password)
 
 	a := adminAuth{Username: username, Password: password}
 	ok, _ := valid.Valid(&a)
 
 	if !ok {
-		response.SendErr(0, "格式不正确")
+		response.SendErr(0, "用户名密码格式不正确")
 		return
 	}
 
