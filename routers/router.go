@@ -35,6 +35,9 @@ func InitRouter(r *gin.Engine) {
 	adminapi := r.Group("/api/admin")
 	adminapi.Use(jwt.JWT())
 	{
+		// 获取用户信息
+		adminapi.POST("/user/info", admin.User_Info)
+
 		// 获取活动列表
 		adminapi.POST("/meet/list", admin.Meet_List)
 		// 添加活动

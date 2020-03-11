@@ -35,3 +35,17 @@ INSERT INTO `meeting_admin_auths` (`id`, `username`, `password`)
 VALUES 
     (1, 'admin', 'admin');
 UNLOCK TABLES;
+
+CREATE TABLE meeting_admin_user_infos (
+  `id` int(10) unsigned NOT NULL,
+  `name` varchar(80) COMMENT '名字',
+  `avatar` varchar(80) COMMENT '头像',
+  `introduction` varchar(80) COMMENT '简介',
+  `roles` varchar(100) COMMENT '角色'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='后台管理用户信息';
+
+LOCK TABLES `meeting_admin_user_infos` WRITE;
+INSERT INTO `meeting_admin_user_infos` (`id`, `name`, `avatar`, `introduction`, `roles`) 
+VALUES 
+    (1, 'Admin', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif', 'I am Super Admin', '["admin"]');
+UNLOCK TABLES;
